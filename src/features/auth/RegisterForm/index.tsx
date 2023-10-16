@@ -1,18 +1,18 @@
 import "./styles.scss";
 import { Button, Label, TextInput } from "flowbite-react";
 import { useFormik } from "formik";
-import { LoginSchema } from "../schemas/login.schema";
+import { RegisterSchema } from "../schemas/register.schema";
 import { Link } from "react-router-dom";
 
-function LoginForm() {
+function RegisterForm() {
   const onSubmit = () => {
     console.log("submit");
   };
 
   const { values, errors, handleBlur, handleChange, handleSubmit } = useFormik({
-    initialValues: { email: "", password: "" },
+    initialValues: { fullname: "", email: "", password: "", confirmation: "" },
     onSubmit,
-    validationSchema: LoginSchema,
+    validationSchema: RegisterSchema,
   });
 
   return (
@@ -22,6 +22,19 @@ function LoginForm() {
         className="flex max-w-md flex-col gap-4 border-solid border-2 rounded text-2xl max-w-xl w-full p-8 bg-white shadow-lg"
         autoComplete="off"
       >
+        <div>
+          <div className="mb-2 block text-4xl">
+            <Label htmlFor="fullname1" value="Your fullname" />
+          </div>
+          <TextInput
+            id="fullname1"
+            type="text"
+            name="fullname"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.fullname}
+          />
+        </div>
         <div>
           <div className="mb-2 block text-4xl">
             <Label htmlFor="email1" value="Your email" />
@@ -34,7 +47,6 @@ function LoginForm() {
             onChange={handleChange}
             onBlur={handleBlur}
             value={values.email}
-            className="input-error"
           />
         </div>
         <div>
@@ -48,11 +60,24 @@ function LoginForm() {
             onChange={handleChange}
             onBlur={handleBlur}
             value={values.password}
-            className={`w-full ${errors.password ? "input-error" : ""}`}
           />
         </div>
-        <Link to="/register">
-          <p className="text-sm text-sky-700 underline">Create an account</p>
+        <div>
+          <div className="mb-2 block">
+            <Label htmlFor="confirmation1" value="Your confirmed password" />
+          </div>
+          <TextInput
+            name="confirmation"
+            id="confirmation1"
+            type="password"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.confirmation}
+            className={`w-full ${errors.confirmation ? "input-error" : ""}`}
+          />
+        </div>
+        <Link to="/login">
+          <p className="text-sm text-sky-700 underline">Already have account</p>
         </Link>
         <Button className="gap-2" type="submit">
           Submit
@@ -62,4 +87,4 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+export default RegisterForm;
